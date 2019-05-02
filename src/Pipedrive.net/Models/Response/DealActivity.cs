@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
-namespace Pipedrive
+namespace Pipedrive.Models.Response
 {
-    public class Activity : IDealUpdateEntity
+    public class DealActivity
     {
         public long Id { get; set; }
 
@@ -89,6 +89,9 @@ namespace Pipedrive
         [JsonProperty("participants")]
         public List<Participant> Participants { get; set; }
 
+        [JsonProperty("note_clean")]
+        public string NoteClean { get; set; }
+
         [JsonProperty("org_name")]
         public string OrgName { get; set; }
 
@@ -110,12 +113,12 @@ namespace Pipedrive
         [JsonProperty("assigned_to_user_id")]
         public long? AssignedToUserId { get; set; }
 
-        public ActivityUpdate ToUpdate()
+        public Activity ToActivity()
         {
-            return new ActivityUpdate
+            return new Activity
             {
                 Subject = Subject,
-                Done = Done ? ActivityDone.Done : ActivityDone.Undone,
+                Done = Done,
                 Type = Type,
                 DueDate = DueDate,
                 DueTime = DueTime,
